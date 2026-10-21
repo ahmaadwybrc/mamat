@@ -41,7 +41,7 @@ app.get('/admin', (req, res) => {
 
 // API Routes
 app.get('/api/register', (req, res) => {
-  res.redirect('/register.html');
+  res.redirect('https://mamat-git-main-ahmad5-388c.vercel.app/register.html');
 });
 
 // Register new user
@@ -70,10 +70,9 @@ app.post('/api/register', async (req, res) => {
     // Add user to storage (Upstash Redis)
     await storageConfig.addUser({ name, email, phone, username, password });
     
-    // Jika request dari form submit native (captive portal HP)
+    // Jika request dari form submit native (captive portal HP), gunakan URL ABSOLUT agar tidak menggantung
     if (!isJson) {
-      // Direct ke login.html dengan URL penuh/statis yang valid di Vercel
-      return res.redirect('/login.html?registered=success');
+      return res.redirect('https://mamat-git-main-ahmad5-388c.vercel.app/login.html?registered=success');
     }
     
     // Jika request dari AJAX fetch JSON
