@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Memaksa semua relative URL mengarah ke domain Vercel asli yang sedang aktif, bukan ke IP router -->
+    <base href="/">
     <title>Registrasi Akun - TKJ Network Terminal</title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -275,9 +277,6 @@
     </div>
 
     <script>
-        // Gunakan hardcode domain Vercel asli
-        const BACKEND_URL = 'https://mamat-git-main-ahmad5-388c.vercel.app';
-
         const form = document.getElementById('registerForm');
         const submitBtn = document.getElementById('submitBtn');
         const btnText = document.getElementById('btnText');
@@ -306,7 +305,8 @@
             btnText.innerHTML = '<span class="loading"></span> Memproses...';
 
             try {
-                const response = await fetch(`${BACKEND_URL}/api/register`, {
+                // Menggunakan relative path langsung ke server backend Vercel tanpa isu CORS
+                const response = await fetch('/api/register', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -316,7 +316,7 @@
 
                 const data = await response.json();
 
-                if (data.success) {
+                if (response.ok && data.success) {
                     showMessage(data.message + ' Mengalihkan...', 'success');
                     form.reset();
 
