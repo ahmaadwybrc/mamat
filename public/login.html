@@ -214,11 +214,8 @@
             <p>TKJ Telemetry Gateway</p>
         </div>
 
-        <!-- FORM LOGIN MIKROTIK NATIVE ACTION -->
-        <form id="loginForm" name="login" action="$(link-login-only)" method="post">
-            <input type="hidden" name="dst" value="$(link-orig)">
-            <input type="hidden" name="popup" value="true">
-
+        <!-- FORM LOGIN -->
+        <form id="loginForm" name="login" method="post">
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" value="" required placeholder="Masukkan username driver">
@@ -295,8 +292,33 @@
                     showMessage(`System initialized, Driver ${data.user.name}! Login berhasil.`, 'success');
                     
                     setTimeout(() => {
-                        showMessage('Masuk ke jalur utama...', 'info');
-                        HTMLFormElement.prototype.submit.call(form);
+                        showMessage('Mengarahkan ke jaringan MikroTik...', 'info');
+                        
+                        // Buat form dinamis untuk melempar kredensial langsung ke IP Gateway MikroTik lokal
+                        const hotspotForm = document.createElement('form');
+                        hotspotForm.action = 'http://192.168.88.1/login'; // Sesuaikan IP MikroTik jika berbeda
+                        hotspotForm.method = 'POST';
+
+                        const userField = document.createElement('input');
+                        userField.type = 'hidden';
+                        userField.name = 'username';
+                        userField.value = usernameVal;
+                        hotspotForm.appendChild(userField);
+
+                        const passField = document.createElement('input');
+                        passField.type = 'hidden';
+                        passField.name = 'password';
+                        passField.value = passwordVal;
+                        hotspotForm.appendChild(passField);
+
+                        const dstField = document.createElement('input');
+                        dstField.type = 'hidden';
+                        dstField.name = 'dst';
+                        dstField.value = 'http://www.google.com';
+                        hotspotForm.appendChild(dstField);
+
+                        document.body.appendChild(hotspotForm);
+                        hotspotForm.submit(); // Kirim data langsung ke MikroTik lokal untuk aktivasi sesi
                     }, 1500);
                 } else {
                     showMessage(data.message, 'error');
