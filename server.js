@@ -29,29 +29,44 @@ app.get('/admin', (req, res) => {
 });
 
 // API Routes
-// Register new user
+// Register new user (Mendukung AJAX & Native Form Submit Captive Portal)
 app.post('/api/register', async (req, res) => {
   try {
     const { name, email, phone, username, password } = req.body;
     
     // Validate input
     if (!name || !email || !phone || !username || !password) {
-      return res.status(400).json({ success: false, message: 'All fields are required' });
+      if (req.is('json')) {
+        return res.status(400).json({ success: false, message: 'All fields are required' });
+      }
+      return res.status(400).send('All fields are required. <a href="/register">Go back</a>');
     }
     
     // Check if username already exists
     const existingUser = await storageConfig.getUserByUsername(username);
     if (existingUser) {
-      return res.status(400).json({ success: false, message: 'Username already exists' });
+      if (req.is('json')) {
+        return res.status(400).json({ success: false, message: 'Username already exists' });
+      }
+      return res.status(400).send('Username already exists. <a href="/register">Go back</a>');
     }
     
     // Add user to storage
     await storageConfig.addUser({ name, email, phone, username, password });
     
+    // Jika request dari form submit native (captive portal HP)
+    if (!req.is('json')) {
+      return res.redirect('/login.html?registered=success');
+    }
+    
+    // Jika request dari AJAX fetch JSON
     res.json({ success: true, message: 'Registration successful. Please wait for admin approval.' });
   } catch (error) {
     console.error('Registration error:', error);
-    res.status(500).json({ success: false, message: 'Registration failed' });
+    if (req.is('json')) {
+      return res.status(500).json({ success: false, message: 'Registration failed' });
+    }
+    res.status(500).send('Registration failed. <a href="/register">Go back</a>');
   }
 });
 
