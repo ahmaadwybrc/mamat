@@ -189,7 +189,6 @@
             <p>✨ Join the Bratz Pack ✨</p>
         </div>
 
-        <!-- Tanpa action form, dihandle sepenuhnya oleh JavaScript Fetch API -->
         <form id="registerForm">
             <div class="form-group">
                 <label for="name">Nama Lengkap</label>
@@ -228,6 +227,9 @@
     </div>
 
     <script>
+        // Otomatis mendeteksi domain Vercel yang aktif saat ini
+        const BACKEND_URL = window.location.origin;
+
         const form = document.getElementById('registerForm');
         const submitBtn = document.getElementById('submitBtn');
         const btnText = document.getElementById('btnText');
@@ -253,7 +255,7 @@
             message.style.display = 'none';
 
             try {
-                const response = await fetch('/api/register', {
+                const response = await fetch(`${BACKEND_URL}/api/register`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
