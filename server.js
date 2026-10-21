@@ -37,6 +37,11 @@ app.get('/admin', (req, res) => {
 });
 
 // API Routes
+// Fallback untuk method GET pada /api/register agar tidak memunculkan Cannot GET /api/register (404)
+app.get('/api/register', (req, res) => {
+  res.redirect('/register');
+});
+
 // Register new user (Mendukung AJAX & Native Form Submit Captive Portal dengan deteksi header yang lebih aman)
 app.post('/api/register', async (req, res) => {
   try {
