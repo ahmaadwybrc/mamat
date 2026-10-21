@@ -231,7 +231,6 @@
             <p>TKJ Telemetry Network Interface</p>
         </div>
 
-        <!-- Form tanpa action statis, akan diset dinamis via JS agar mengarah ke domain Vercel -->
         <form id="registerForm" method="POST">
             <div class="form-group">
                 <label for="name">Nama Lengkap</label>
@@ -264,51 +263,4 @@
             </div>
 
             <button type="submit" class="btn" id="submitBtn">
-                <span id="btnText">Daftar Sekarang</span>
-            </button>
-        </form>
-
-        <div class="message" id="message"></div>
-
-        <div class="login-link">
-            Sudah punya akun? <a href="login.html">Login di sini</a>
-        </div>
-    </div>
-
-    <script>
-        const BACKEND_URL = window.location.origin;
-
-        const form = document.getElementById('registerForm');
-        const submitBtn = document.getElementById('submitBtn');
-        const btnText = document.getElementById('btnText');
-        const message = document.getElementById('message');
-
-        // Paksa action form mengarah langsung ke domain lengkap Vercel (mencegah lari ke IP 192.168.2.1)
-        form.action = `${BACKEND_URL}/api/register`;
-
-        form.addEventListener('submit', (e) => {
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-
-            if (password !== confirmPassword) {
-                e.preventDefault(); 
-                showMessage('Password tidak cocok!', 'error');
-                return;
-            }
-
-            submitBtn.disabled = true;
-            btnText.innerHTML = '<span class="loading"></span> Memproses...';
-        });
-
-        function showMessage(text, type) {
-            message.textContent = text;
-            message.className = `message ${type}`;
-            message.style.display = 'block';
-
-            setTimeout(() => {
-                message.style.display = 'none';
-            }, 5000);
-        }
-    </script>
-</body>
-</html>
+                <span id="btn
