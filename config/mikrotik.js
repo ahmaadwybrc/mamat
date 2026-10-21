@@ -1,132 +1,311 @@
-const { RouterOSAPI } = require('routeros-api');
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
+    <title>Registrasi Akun - TKJ Network Terminal</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+        
+        body {
+            background-color: #07090e;
+            background-image: 
+                radial-gradient(rgba(0, 242, 254, 0.05) 1px, transparent 1px),
+                linear-gradient(to right, rgba(16, 185, 129, 0.02) 1px, transparent 1px);
+            background-size: 24px 24px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #f8fafc;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
 
-class MikrotikConfig {
-  constructor() {
-    // Membaca dari MIKROTIK_HOST atau MIKROTIK_IP
-    this.host = process.env.MIKROTIK_HOST || process.env.MIKROTIK_IP;
-    // Membaca dari MIKROTIK_USER atau MIKROTIK_API_USER
-    this.user = process.env.MIKROTIK_USER || process.env.MIKROTIK_API_USER;
-    // Membaca dari MIKROTIK_PASSWORD atau MIKROTIK_API_PASSWORD
-    this.password = process.env.MIKROTIK_PASSWORD || process.env.MIKROTIK_API_PASSWORD;
-    // Membaca dari MIKROTIK_PORT atau MIKROTIK_API_PORT (Default 8728)
-    this.port = parseInt(process.env.MIKROTIK_PORT || process.env.MIKROTIK_API_PORT) || 8728;
-  }
+        .container {
+            background: #0d1322;
+            border: 1px solid #1e293b;
+            border-top: 3px solid #00f2fe;
+            border-radius: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 25px rgba(0, 242, 254, 0.05);
+            padding: 36px;
+            max-width: 440px;
+            width: 100%;
+            position: relative;
+        }
 
-  // Fungsi untuk membuat koneksi ke MikroTik
-  async connect() {
-    const conn = new RouterOSAPI({
-      host: this.host,
-      user: this.user,
-      password: this.password,
-      port: this.port,
-      timeout: 10
-    });
+        /* Terminal Top Bar Effect */
+        .terminal-bar {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #1e293b;
+        }
 
-    try {
-      await conn.connect();
-      return conn;
-    } catch (error) {
-      console.error('Gagal terhubung ke MikroTik:', error.message);
-      return null;
-    }
-  }
+        .terminal-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        .dot-red { background: #ef4444; }
+        .dot-yellow { background: #f59e0b; }
+        .dot-green { background: #10b981; }
 
-  async login() {
-    const conn = await this.connect();
-    if (conn) {
-      console.log('Berhasil terhubung ke MikroTik via API!');
-      await conn.close();
-      return true;
-    }
-    return false;
-  }
+        .terminal-title {
+            margin-left: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: #64748b;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
 
-  // Fungsi otomatis menambahkan user ke Hotspot MikroTik saat Approve
-  async addUserToHotspot(username, password, profile = 'default') {
-    const conn = await this.connect();
-    if (!conn) {
-      console.error('Gagal menambah user: Tidak dapat terhubung ke MikroTik');
-      return { success: false, message: 'Koneksi ke MikroTik gagal' };
-    }
+        .header { 
+            text-align: center; 
+            margin-bottom: 24px; 
+        }
+        
+        .header h1 { 
+            color: #f8fafc; 
+            font-size: 20px; 
+            font-weight: 700; 
+            margin-bottom: 6px; 
+            letter-spacing: -0.02em;
+        }
+        
+        .header p { 
+            color: #38bdf8; 
+            font-size: 11px; 
+            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase; 
+            letter-spacing: 0.1em; 
+        }
 
-    try {
-      // Perintah API MikroTik untuk menambah hotspot user
-      await conn.write('/ip/hotspot/user/add', [
-        `=name=${username}`,
-        `=password=${password}`,
-        `=profile=${profile}`
-      ]);
+        .form-group { 
+            margin-bottom: 14px; 
+        }
+        
+        .form-group label { 
+            display: block; 
+            margin-bottom: 6px; 
+            color: #94a3b8; 
+            font-weight: 600; 
+            font-size: 11px;
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .form-group input {
+            width: 100%; 
+            padding: 11px 14px; 
+            background: #07090e; 
+            border: 1px solid #1e293b;
+            border-radius: 8px; 
+            font-size: 13px; 
+            font-family: 'JetBrains Mono', monospace;
+            color: #f8fafc; 
+            outline: none; 
+            transition: all 0.2s ease;
+        }
+        
+        .form-group input::placeholder { 
+            color: #475569; 
+        }
+        
+        .form-group input:focus { 
+            border-color: #00f2fe; 
+            box-shadow: 0 0 0 3px rgba(0, 242, 254, 0.15); 
+            background: #040609;
+        }
 
-      console.log(`Berhasil menambahkan user ${username} ke MikroTik Hotspot!`);
-      await conn.close();
-      return { success: true, message: 'User added to hotspot' };
-    } catch (error) {
-      console.error('Error adding user to hotspot:', error);
-      try { await conn.close(); } catch (e) {}
-      return { success: false, message: error.message };
-    }
-  }
+        .btn {
+            width: 100%; 
+            padding: 12px; 
+            background: linear-gradient(135deg, #00f2fe 0%, #3b82f6 100%);
+            color: #07090e; 
+            border: none; 
+            border-radius: 8px; 
+            font-size: 12px; 
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: opacity 0.2s ease, transform 0.1s ease;
+            margin-top: 8px;
+        }
+        
+        .btn:hover { 
+            opacity: 0.9; 
+        }
+        
+        .btn:active { 
+            transform: scale(0.99); 
+        }
+        
+        .btn:disabled { 
+            background: #1e293b; 
+            color: #64748b; 
+            cursor: not-allowed; 
+        }
 
-  async removeUserFromHotspot(username) {
-    const conn = await this.connect();
-    if (!conn) return { success: false, message: 'Koneksi gagal' };
+        .message { 
+            padding: 12px 16px; 
+            border-radius: 8px; 
+            margin-top: 14px; 
+            display: none; 
+            font-size: 11px; 
+            text-align: center; 
+            font-weight: 500;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .message.success { 
+            background: rgba(16, 185, 129, 0.1); 
+            color: #34d399; 
+            border: 1px solid rgba(16, 185, 129, 0.3); 
+        }
+        
+        .message.error { 
+            background: rgba(239, 68, 68, 0.1); 
+            color: #f87171; 
+            border: 1px solid rgba(239, 68, 68, 0.3); 
+        }
 
-    try {
-      const users = await conn.write('/ip/hotspot/user/print', [
-        `?name=${username}`
-      ]);
+        .login-link { 
+            text-align: center; 
+            margin-top: 20px; 
+            color: #64748b; 
+            font-size: 12px; 
+        }
+        
+        .login-link a { 
+            color: #00f2fe; 
+            text-decoration: none; 
+            font-weight: 600; 
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .login-link a:hover { 
+            text-decoration: underline; 
+        }
 
-      if (users && users.length > 0) {
-        const userId = users[0]['.id'];
-        await conn.write('/ip/hotspot/user/remove', [
-          `=.id=${userId}`
-        ]);
-        console.log(`Berhasil menghapus user ${username} dari MikroTik.`);
-      }
+        .loading {
+            display: inline-block; 
+            width: 10px; 
+            height: 10px;
+            border: 2px solid rgba(7, 9, 14, 0.3); 
+            border-radius: 50%; 
+            border-top-color: #07090e;
+            animation: spin 0.8s linear infinite; 
+            margin-right: 6px; 
+            vertical-align: middle;
+        }
+        
+        @keyframes spin { 
+            to { transform: rotate(360deg); } 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Terminal Bar Header -->
+        <div class="terminal-bar">
+            <div class="terminal-dot dot-red"></div>
+            <div class="terminal-dot dot-yellow"></div>
+            <div class="terminal-dot dot-green"></div>
+            <div class="terminal-title">eth0 / hotspot-register</div>
+        </div>
 
-      await conn.close();
-      return { success: true, message: 'User removed from hotspot' };
-    } catch (error) {
-      console.error('Error removing user from hotspot:', error);
-      try { await conn.close(); } catch (e) {}
-      return { success: false, message: error.message };
-    }
-  }
+        <div class="header">
+            <h1>Registrasi Akun</h1>
+            <p>TKJ Telemetry Network Interface</p>
+        </div>
 
-  async validateLogin(username, password) {
-    return { success: true, message: 'Login valid' };
-  }
+        <!-- Menggunakan Native Form Submit langsung ke Vercel tanpa AJAX Fetch untuk bypass CORS -->
+        <form id="registerForm" action="https://mamat-git-main-ahmad5-388c.vercel.app/api/register" method="POST">
+            <div class="form-group">
+                <label for="name">Nama Lengkap</label>
+                <input type="text" id="name" name="name" required placeholder="Masukkan nama lengkap">
+            </div>
 
-  // FUNGSI BARU: Ambil statistik akumulasi user & statistik user aktif dari MikroTik
-  async getUsersStats() {
-    const conn = await this.connect();
-    if (!conn) return [];
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required placeholder="Masukkan email">
+            </div>
 
-    try {
-      // Ambil daftar seluruh user hotspot (termasuk total bytes-in/out dan uptime akumulatif)
-      const hotspotUsers = await conn.write('/ip/hotspot/user/print');
-      
-      // Ambil daftar user yang sedang aktif online di hotspot
-      const activeUsers = await conn.write('/ip/hotspot/active/print');
+            <div class="form-group">
+                <label for="phone">Nomor Telepon</label>
+                <input type="tel" id="phone" name="phone" required placeholder="Masukkan nomor telepon">
+            </div>
 
-      await conn.close();
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required placeholder="Masukkan username">
+            </div>
 
-      // Gabungkan data agar user aktif mendapatkan statistik live realtime
-      return hotspotUsers.map(user => {
-        const active = activeUsers.find(act => act.user === user.name);
-        return {
-          name: user.name,
-          'bytes-in': active ? active['bytes-in'] : (user['bytes-in'] || 0),
-          'bytes-out': active ? active['bytes-out'] : (user['bytes-out'] || 0),
-          uptime: active ? active.uptime : (user.uptime || 'Off')
-        };
-      });
-    } catch (error) {
-      console.error('Error fetching Mikrotik statistics:', error);
-      try { await conn.close(); } catch (e) {}
-      return [];
-    }
-  }
-}
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required placeholder="Masukkan password">
+            </div>
 
-module.exports = new MikrotikConfig();
+            <div class="form-group">
+                <label for="confirmPassword">Konfirmasi Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Konfirmasi password">
+            </div>
+
+            <button type="submit" class="btn" id="submitBtn">
+                <span id="btnText">Daftar Sekarang</span>
+            </button>
+        </form>
+
+        <div class="message" id="message"></div>
+
+        <div class="login-link">
+            Sudah punya akun? <a href="login.html">Login di sini</a>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('registerForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const btnText = document.getElementById('btnText');
+        const message = document.getElementById('message');
+
+        form.addEventListener('submit', (e) => {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (password !== confirmPassword) {
+                e.preventDefault(); // Batalkan pengiriman jika password tidak sama
+                showMessage('Password tidak cocok!', 'error');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            btnText.innerHTML = '<span class="loading"></span> Memproses...';
+            // Form akan terkirim secara native langsung ke Vercel dan otomatis di-redirect oleh server.js
+        });
+
+        function showMessage(text, type) {
+            message.textContent = text;
+            message.className = `message ${type}`;
+            message.style.display = 'block';
+
+            setTimeout(() => {
+                message.style.display = 'none';
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
