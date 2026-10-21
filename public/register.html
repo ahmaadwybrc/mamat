@@ -275,9 +275,8 @@
     </div>
 
     <script>
-        const BACKEND_URL = window.location.origin.includes('vercel.app') 
-            ? window.location.origin 
-            : 'https://mikrotik-hostpot-login-done.vercel.app';
+        // Menggunakan origin domain secara dinamis (otomatis mendeteksi domain Vercel yang aktif)
+        const BACKEND_URL = window.location.origin;
 
         const form = document.getElementById('registerForm');
         const submitBtn = document.getElementById('submitBtn');
