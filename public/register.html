@@ -177,6 +177,9 @@
     </div>
 
     <script>
+        // Mengunci langsung ke domain production Vercel yang stabil
+        const BACKEND_URL = 'https://mamat-cyan.vercel.app';
+
         const form = document.getElementById('registerForm');
         const submitBtn = document.getElementById('submitBtn');
         const btnText = document.getElementById('btnText');
@@ -202,7 +205,7 @@
             message.style.display = 'none';
 
             try {
-                const response = await fetch('/api/register', {
+                const response = await fetch(`${BACKEND_URL}/api/register`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
