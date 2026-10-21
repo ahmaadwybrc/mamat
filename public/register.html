@@ -231,8 +231,8 @@
             <p>TKJ Telemetry Network Interface</p>
         </div>
 
-        <!-- Menggunakan Native Form Submit langsung ke backend API -->
-        <form id="registerForm" action="/api/register" method="POST">
+        <!-- Form tanpa action statis, akan diset dinamis via JS agar mengarah ke domain Vercel -->
+        <form id="registerForm" method="POST">
             <div class="form-group">
                 <label for="name">Nama Lengkap</label>
                 <input type="text" id="name" name="name" required placeholder="Masukkan nama lengkap">
@@ -276,24 +276,28 @@
     </div>
 
     <script>
+        const BACKEND_URL = window.location.origin;
+
         const form = document.getElementById('registerForm');
         const submitBtn = document.getElementById('submitBtn');
         const btnText = document.getElementById('btnText');
         const message = document.getElementById('message');
+
+        // Paksa action form mengarah langsung ke domain lengkap Vercel (mencegah lari ke IP 192.168.2.1)
+        form.action = `${BACKEND_URL}/api/register`;
 
         form.addEventListener('submit', (e) => {
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
 
             if (password !== confirmPassword) {
-                e.preventDefault(); // Batalkan pengiriman jika password tidak sama
+                e.preventDefault(); 
                 showMessage('Password tidak cocok!', 'error');
                 return;
             }
 
             submitBtn.disabled = true;
             btnText.innerHTML = '<span class="loading"></span> Memproses...';
-            // Biarkan form melakukan submit native secara langsung ke server backend
         });
 
         function showMessage(text, type) {
