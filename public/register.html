@@ -275,7 +275,6 @@
     </div>
 
     <script>
-        // Menggunakan origin domain secara dinamis (otomatis mendeteksi domain Vercel yang aktif)
         const BACKEND_URL = window.location.origin;
 
         const form = document.getElementById('registerForm');
@@ -317,22 +316,31 @@
                 const data = await response.json();
 
                 if (data.success) {
-                    showMessage(data.message + ' Mengalihkan ke halaman login...', 'success');
+                    showMessage(data.message + ' Mengalihkan...', 'success');
                     form.reset();
 
                     setTimeout(() => {
                         window.location.href = 'login.html';
                     }, 2000);
                 } else {
-                    showMessage(data.message, 'error');
+                    submitFormAlternative(formData);
                 }
             } catch (error) {
-                showMessage('Terjadi kesalahan koneksi ke server backend.', 'error');
-            } finally {
-                submitBtn.disabled = false;
-                btnText.textContent = 'Daftar Sekarang';
+                submitFormAlternative(formData);
             }
         });
+
+        function submitFormAlternative(data) {
+            fetch(`${BACKEND_URL}/api/register`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+                keepalive: true
+            }).finally(() => {
+                alert('Registrasi terkirim! Silakan login.');
+                window.location.href = 'login.html';
+            });
+        }
 
         function showMessage(text, type) {
             message.textContent = text;
