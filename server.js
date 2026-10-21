@@ -334,4 +334,7 @@ app.post('/api/admin/login', (req, res) => {
 module.exports = app;
 
 if (process.env.NODE_ENV !== 'production') {
-  app.listen(PORT, '0.0.0.0', () =>
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+  });
+}
