@@ -29,14 +29,15 @@ app.get('/admin', (req, res) => {
 });
 
 // API Routes
-// Register new user (Mendukung AJAX & Native Form Submit Captive Portal)
+// Register new user (Mendukung AJAX & Native Form Submit Captive Portal dengan deteksi header yang lebih aman)
 app.post('/api/register', async (req, res) => {
   try {
     const { name, email, phone, username, password } = req.body;
+    const isJson = req.headers['content-type'] && req.headers['content-type'].includes('application/json');
     
     // Validate input
     if (!name || !email || !phone || !username || !password) {
-      if (req.is('json')) {
+      if (isJson) {
         return res.status(400).json({ success: false, message: 'All fields are required' });
       }
       return res.status(400).send('All fields are required. <a href="/register">Go back</a>');
@@ -45,17 +46,17 @@ app.post('/api/register', async (req, res) => {
     // Check if username already exists
     const existingUser = await storageConfig.getUserByUsername(username);
     if (existingUser) {
-      if (req.is('json')) {
+      if (isJson) {
         return res.status(400).json({ success: false, message: 'Username already exists' });
       }
       return res.status(400).send('Username already exists. <a href="/register">Go back</a>');
     }
     
-    // Add user to storage
+    // Add user to storage (Upstash Redis)
     await storageConfig.addUser({ name, email, phone, username, password });
     
     // Jika request dari form submit native (captive portal HP)
-    if (!req.is('json')) {
+    if (!isJson) {
       return res.redirect('/login.html?registered=success');
     }
     
@@ -63,25 +64,24 @@ app.post('/api/register', async (req, res) => {
     res.json({ success: true, message: 'Registration successful. Please wait for admin approval.' });
   } catch (error) {
     console.error('Registration error:', error);
-    if (req.is('json')) {
+    const isJson = req.headers['content-type'] && req.headers['content-type'].includes('application/json');
+    if (isJson) {
       return res.status(500).json({ success: false, message: 'Registration failed' });
     }
     res.status(500).send('Registration failed. <a href="/register">Go back</a>');
   }
 });
 
-// Get all users (admin only) - DIPERBARUI DENGAN STATISTIK MIKROTIK
+// Get all users (admin only) - Statistik MikroTik
 app.get('/api/users', async (req, res) => {
   try {
     const users = await storageConfig.getAllUsers();
     
-    // Ambil data statistik aktif & user dari MikroTik
     let mikrotikStats = [];
     if (mikrotikConfig.getUsersStats && typeof mikrotikConfig.getUsersStats === 'function') {
       mikrotikStats = await mikrotikConfig.getUsersStats();
     }
 
-    // Gabungkan data user storage dengan statistik MikroTik
     const enrichedUsers = users.map(user => {
       const stats = mikrotikStats.find(s => s.name === user.username || s.user === user.username) || {};
       
@@ -109,10 +109,8 @@ app.post('/api/approve', async (req, res) => {
       return res.status(400).json({ success: false, message: 'Username and admin name are required' });
     }
     
-    // Update user status in storage
     await storageConfig.approveUser(username, adminName);
     
-    // Add user to Mikrotik hotspot
     const userData = await storageConfig.getUserByUsername(username);
     await mikrotikConfig.addUserToHotspot(userData.username, userData.password);
     
@@ -165,24 +163,20 @@ app.post('/api/login', async (req, res) => {
       return res.status(400).json({ success: false, message: 'Username and password are required' });
     }
     
-    // Get user from storage
     const user = await storageConfig.getUserByUsername(username);
     
     if (!user) {
       return res.status(404).json({ success: false, message: 'User not found' });
     }
     
-    // Check if password matches
     if (user.password !== password) {
       return res.status(401).json({ success: false, message: 'Invalid password' });
     }
     
-    // Check if user is approved
     if (user.status !== 'approved') {
       return res.status(403).json({ success: false, message: 'User not approved yet' });
     }
     
-    // Validate with Mikrotik
     const mikrotikResult = await mikrotikConfig.validateLogin(username, password);
     
     if (mikrotikResult.success) {
