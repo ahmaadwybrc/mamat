@@ -9,14 +9,13 @@ const mikrotikConfig = require('./config/mikrotik');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware CORS yang dioptimalkan untuk Captive Portal HP
+// Middleware CORS yang dioptimalkan
 app.use(cors({
   origin: '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
 
-// Tangani preflight request OPTIONS secara manual agar lolos dari blokir CORS browser HP
 app.options('*', cors());
 
 app.use(bodyParser.json());
@@ -25,6 +24,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes Static File
 app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'login.html'));
+});
+
+app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 
@@ -37,12 +40,11 @@ app.get('/admin', (req, res) => {
 });
 
 // API Routes
-// Fallback untuk method GET pada /api/register agar tidak memunculkan Cannot GET /api/register (404)
 app.get('/api/register', (req, res) => {
-  res.redirect('/register');
+  res.redirect('/register.html');
 });
 
-// Register new user (Mendukung AJAX & Native Form Submit Captive Portal dengan deteksi header yang lebih aman)
+// Register new user
 app.post('/api/register', async (req, res) => {
   try {
     const { name, email, phone, username, password } = req.body;
@@ -53,7 +55,7 @@ app.post('/api/register', async (req, res) => {
       if (isJson) {
         return res.status(400).json({ success: false, message: 'All fields are required' });
       }
-      return res.status(400).send('All fields are required. <a href="/register">Go back</a>');
+      return res.status(400).send('All fields are required. <a href="/register.html">Go back</a>');
     }
     
     // Check if username already exists
@@ -62,7 +64,7 @@ app.post('/api/register', async (req, res) => {
       if (isJson) {
         return res.status(400).json({ success: false, message: 'Username already exists' });
       }
-      return res.status(400).send('Username already exists. <a href="/register">Go back</a>');
+      return res.status(400).send('Username already exists. <a href="/register.html">Go back</a>');
     }
     
     // Add user to storage (Upstash Redis)
@@ -70,6 +72,7 @@ app.post('/api/register', async (req, res) => {
     
     // Jika request dari form submit native (captive portal HP)
     if (!isJson) {
+      // Direct ke login.html dengan URL penuh/statis yang valid di Vercel
       return res.redirect('/login.html?registered=success');
     }
     
@@ -81,7 +84,7 @@ app.post('/api/register', async (req, res) => {
     if (isJson) {
       return res.status(500).json({ success: false, message: 'Registration failed' });
     }
-    res.status(500).send('Registration failed. <a href="/register">Go back</a>');
+    res.status(500).send('Registration failed. <a href="/register.html">Go back</a>');
   }
 });
 
@@ -231,10 +234,8 @@ app.post('/api/admin/login', (req, res) => {
   }
 });
 
-// Export app handler untuk Vercel Serverless
 module.exports = app;
 
-// Jalankan server jika running di lokal (npm start / node server.js)
 if (process.env.NODE_ENV !== 'production') {
   app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on http://localhost:${PORT}`);
