@@ -4,173 +4,122 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <base href="/">
-    <title>Registrasi Akun - Bratz Network</title>
-    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    <title>Registrasi Akun - Meow Network</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet">
     <style>
+
         :root {
-            --pink: #ff1493;
-            --hot: #ff4fb8;
-            --candy: #ffd1ec;
-            --purple: #5b1a8f;
-            --deep: #2a0a45;
-            --gold: #ffd24a;
-            --cyan: #36e0ff;
+            --night: #12152a;
+            --fur: #2a2f5c;
+            --fur2: #1b1f3d;
+            --edge: #4b5290;
+            --whisker: #cfd4ff;
+            --nose: #ff9bb3;
+            --eye: #d9f54a;
+            --mint: #7be0d0;
+            --danger: #ff8fa3;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 28px 20px;
             color: #fff;
-            font-family: 'Quicksand', sans-serif;
-            background-color: var(--deep);
+            font-family: 'Nunito', sans-serif;
+            background-color: var(--night);
             background-image:
-                radial-gradient(circle at 20% 15%, rgba(255, 20, 147, 0.55), transparent 45%),
-                radial-gradient(circle at 85% 85%, rgba(54, 224, 255, 0.3), transparent 45%),
-                radial-gradient(rgba(255, 255, 255, 0.35) 1.2px, transparent 1.6px),
-                radial-gradient(rgba(255, 210, 74, 0.35) 1px, transparent 1.4px);
-            background-size: auto, auto, 34px 34px, 52px 52px;
-            background-position: 0 0, 0 0, 0 0, 17px 21px;
+                radial-gradient(circle at 15% 10%, rgba(120, 100, 255, 0.28), transparent 42%),
+                radial-gradient(circle at 88% 90%, rgba(123, 224, 208, 0.16), transparent 42%),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 150 150'%3E%3Cg fill='%23ffffff' fill-opacity='.055'%3E%3Cg transform='translate(36 44) rotate(-20)'%3E%3Cellipse cx='0' cy='7' rx='10' ry='8.5'/%3E%3Cellipse cx='-12' cy='-6' rx='3.8' ry='5'/%3E%3Cellipse cx='-4.5' cy='-13' rx='3.8' ry='5.2'/%3E%3Cellipse cx='4.5' cy='-13' rx='3.8' ry='5.2'/%3E%3Cellipse cx='12' cy='-6' rx='3.8' ry='5'/%3E%3C/g%3E%3Cg transform='translate(108 110) rotate(24)'%3E%3Cellipse cx='0' cy='7' rx='10' ry='8.5'/%3E%3Cellipse cx='-12' cy='-6' rx='3.8' ry='5'/%3E%3Cellipse cx='-4.5' cy='-13' rx='3.8' ry='5.2'/%3E%3Cellipse cx='4.5' cy='-13' rx='3.8' ry='5.2'/%3E%3Cellipse cx='12' cy='-6' rx='3.8' ry='5'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            background-size: auto, auto, 150px 150px;
+            background-attachment: fixed;
         }
-
-        .container {
-            position: relative;
-            width: 100%;
-            max-width: 440px;
-            padding: 34px 32px 30px;
-            border-radius: 28px;
-            background: linear-gradient(160deg, #7a1fb8 0%, #4a1280 100%);
-            border: 3px solid var(--hot);
-            box-shadow:
-                0 0 0 6px rgba(255, 20, 147, 0.25),
-                0 25px 50px rgba(0, 0, 0, 0.55),
-                0 0 45px rgba(255, 20, 147, 0.45);
-        }
-
+        /* Telinga kucing di atas kartu */
         .spots {
-            position: absolute;
-            top: 0; left: 18px; right: 18px;
-            height: 14px;
-            transform: translateY(-50%);
-            border-radius: 999px;
-            background:
-                radial-gradient(ellipse 7px 5px at 12px 7px, #1a0630 55%, transparent 60%) 0 0 / 34px 14px repeat-x,
-                var(--gold);
-            border: 2px solid var(--deep);
+            position: absolute; top: 0; left: 0; right: 0; height: 0;
+            pointer-events: none;
+            filter: drop-shadow(2px 0 0 var(--edge)) drop-shadow(-2px 0 0 var(--edge)) drop-shadow(0 -2px 0 var(--edge));
         }
+        .spots::before, .spots::after {
+            content: ""; position: absolute; bottom: -3px;
+            width: 58px; height: 58px;
+            clip-path: polygon(0 100%, 50% 0, 100% 100%);
+            background: radial-gradient(ellipse 26% 42% at 50% 88%, var(--nose) 97%, transparent 100%), var(--fur);
+            transform-origin: 50% 100%;
+        }
+        .spots::before { left: 26px; transform: rotate(-14deg); }
+        .spots::after { right: 26px; transform: rotate(14deg); }
 
+        body { display: flex; justify-content: center; align-items: center; padding: 44px 20px 28px; }
+        .container {
+            position: relative; width: 100%; max-width: 430px;
+            padding: 34px 32px 30px; border-radius: 30px;
+            background: linear-gradient(170deg, var(--fur) 0%, var(--fur2) 100%);
+            border: 3px solid var(--edge);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 40px rgba(217, 245, 74, 0.07);
+        }
         .terminal-bar { display: flex; align-items: center; gap: 7px; margin-bottom: 20px; }
-        .terminal-dot { width: 12px; height: 12px; border-radius: 50%; border: 2px solid #fff; }
-        .dot-red { background: var(--pink); }
-        .dot-yellow { background: var(--gold); }
-        .dot-green { background: var(--cyan); }
-        .terminal-title { margin-left: auto; font-size: 12px; font-weight: 700; color: var(--candy); }
-
-        .header { text-align: center; margin-bottom: 24px; }
-
+        .terminal-dot { width: 12px; height: 12px; border-radius: 50%; }
+        .dot-red { background: var(--nose); }
+        .dot-yellow { background: var(--eye); }
+        .dot-green { background: var(--mint); }
+        .terminal-title { margin-left: auto; font-size: 12px; font-weight: 700; color: var(--whisker); }
+        .header { text-align: center; margin-bottom: 26px; }
+        .racing-icon {
+            width: 76px; height: 76px; margin: 0 auto 12px;
+            display: flex; justify-content: center; align-items: center; font-size: 38px;
+            border-radius: 50%; background: var(--night); border: 3px solid var(--eye);
+            box-shadow: 0 0 0 4px rgba(217, 245, 74, 0.18), 0 0 22px rgba(217, 245, 74, 0.35);
+        }
         .header h1 {
-            font-family: 'Lilita One', sans-serif;
-            font-weight: 400;
-            font-size: 38px;
-            line-height: 1;
-            letter-spacing: 0.02em;
-            color: #fff;
-            -webkit-text-stroke: 2px var(--deep);
-            paint-order: stroke fill;
-            text-shadow: 3px 3px 0 var(--pink), 6px 6px 0 var(--deep);
-            transform: rotate(-2deg);
-            margin-bottom: 14px;
+            font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 38px; line-height: 1.1;
+            color: #fff; text-shadow: 0 0 18px rgba(207, 212, 255, 0.4); margin-bottom: 12px;
         }
-
         .header p {
-            display: inline-block;
-            padding: 4px 14px;
-            border-radius: 999px;
-            background: var(--gold);
-            color: var(--deep);
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 0.04em;
+            display: inline-block; padding: 4px 16px; border-radius: 999px;
+            border: 2px solid var(--eye); color: var(--eye); font-size: 13px; font-weight: 700;
         }
-
-        .form-group { margin-bottom: 14px; }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 6px;
-            padding-left: 6px;
-            color: var(--candy);
-            font-size: 14px;
-            font-weight: 700;
-        }
-
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 6px; padding-left: 4px; color: var(--whisker); font-size: 14px; font-weight: 700; }
         .form-group input {
-            width: 100%;
-            padding: 12px 18px;
-            background: #fff0f9;
-            border: 2px solid var(--hot);
-            border-radius: 999px;
-            font-size: 14px;
-            font-weight: 600;
-            font-family: 'Quicksand', sans-serif;
-            color: var(--deep);
-            outline: none;
-            transition: box-shadow 0.2s ease, border-color 0.2s ease;
+            width: 100%; padding: 12px 16px; background: #0e1124; border: 2px solid #3d4478;
+            border-radius: 16px; font-size: 14px; font-weight: 600; font-family: 'Nunito', sans-serif;
+            color: #fff; outline: none; transition: box-shadow 0.2s ease, border-color 0.2s ease;
         }
-        .form-group input::placeholder { color: #b07ac9; font-weight: 500; }
-        .form-group input:focus {
-            border-color: var(--gold);
-            box-shadow: 0 0 0 4px rgba(255, 210, 74, 0.5), 0 0 18px rgba(255, 79, 184, 0.7);
-        }
-
+        .form-group input::placeholder { color: #7a82b8; font-weight: 500; }
+        .form-group input:focus { border-color: var(--eye); box-shadow: 0 0 0 4px rgba(217, 245, 74, 0.18); }
         .btn {
-            width: 100%;
-            margin-top: 10px;
-            padding: 14px;
-            border: 3px solid #fff;
-            border-radius: 999px;
-            background: linear-gradient(180deg, #ff6ec7 0%, var(--pink) 55%, #d10a78 100%);
-            color: #fff;
-            font-family: 'Lilita One', sans-serif;
-            font-size: 21px;
-            letter-spacing: 0.06em;
-            text-shadow: 0 2px 0 rgba(42, 10, 69, 0.6);
-            cursor: pointer;
-            box-shadow: 0 6px 0 var(--deep), 0 10px 22px rgba(255, 20, 147, 0.55);
+            width: 100%; margin-top: 8px; padding: 13px; border: none; border-radius: 16px;
+            background: linear-gradient(180deg, #e6ff6a 0%, var(--eye) 50%, #b8e02a 100%);
+            color: var(--night); font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 20px; letter-spacing: 0.05em;
+            cursor: pointer; box-shadow: 0 5px 0 #7d9412, 0 10px 22px rgba(217, 245, 74, 0.22);
             transition: transform 0.1s ease, box-shadow 0.1s ease, filter 0.2s ease;
         }
-        .btn:hover { filter: brightness(1.08); }
-        .btn:active { transform: translateY(4px); box-shadow: 0 2px 0 var(--deep), 0 4px 12px rgba(255, 20, 147, 0.5); }
-        .btn:disabled { background: #8a6aa6; border-color: #c9b3dc; color: #e6d8f0; text-shadow: none; box-shadow: 0 4px 0 var(--deep); cursor: not-allowed; }
-        .btn:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
-
-        .message {
-            padding: 12px 16px;
-            border-radius: 18px;
-            margin-top: 16px;
-            display: none;
-            font-size: 13px;
-            font-weight: 700;
-            text-align: center;
-        }
-        .message.success { background: #d9fff0; color: #0a6b45; border: 2px solid #2fd69a; }
-        .message.error { background: #ffe0ec; color: #a10a47; border: 2px solid var(--pink); }
-
-        .login-link { text-align: center; margin-top: 22px; color: var(--candy); font-size: 14px; font-weight: 600; }
-        .login-link a { color: var(--gold); font-weight: 700; text-decoration: none; border-bottom: 2px dashed var(--gold); }
-        .login-link a:hover { color: #fff; border-color: #fff; }
-
-        .loading {
-            display: inline-block; width: 14px; height: 14px;
-            border: 3px solid rgba(255, 255, 255, 0.4); border-radius: 50%;
-            border-top-color: #fff; animation: spin 0.8s linear infinite;
-            margin-right: 8px; vertical-align: middle;
-        }
+        .btn:hover { filter: brightness(1.06); }
+        .btn:active { transform: translateY(4px); box-shadow: 0 1px 0 #7d9412; }
+        .btn:disabled { background: #3d4478; color: #9aa2d8; box-shadow: 0 4px 0 #23284a; cursor: not-allowed; }
+        .btn:focus-visible, .toggle-status:focus-visible, .status-check button:focus-visible { outline: 3px solid var(--whisker); outline-offset: 3px; }
+        .message { padding: 12px 16px; border-radius: 14px; margin-top: 16px; display: none; font-size: 13px; font-weight: 700; text-align: center; border: 2px solid; }
+        .message.success { background: rgba(123, 224, 208, 0.14); color: var(--mint); border-color: var(--mint); }
+        .message.error { background: rgba(255, 143, 163, 0.14); color: var(--danger); border-color: var(--danger); }
+        .message.info { background: rgba(207, 212, 255, 0.12); color: var(--whisker); border-color: var(--whisker); }
+        .register-link, .login-link { text-align: center; margin-top: 22px; color: #aab1e6; font-size: 14px; font-weight: 600; }
+        .register-link a, .login-link a { color: var(--eye); font-weight: 700; text-decoration: none; border-bottom: 2px dotted var(--eye); }
+        .register-link a:hover, .login-link a:hover { color: #fff; border-color: #fff; }
+        .loading { display: inline-block; width: 14px; height: 14px; border: 3px solid rgba(18, 21, 42, 0.3); border-radius: 50%; border-top-color: var(--night); animation: spin 0.8s linear infinite; margin-right: 8px; vertical-align: middle; }
         @keyframes spin { to { transform: rotate(360deg); } }
+        .status-check { margin-top: 16px; padding: 16px; background: rgba(14, 17, 36, 0.6); border: 2px dashed #3d4478; border-radius: 18px; display: none; }
+        .status-check.show { display: block; }
+        .status-check input { width: calc(100% - 64px); padding: 10px 14px; background: #0e1124; border: 2px solid #3d4478; border-radius: 12px; color: #fff; margin-right: 6px; outline: none; font-size: 13px; font-weight: 600; font-family: 'Nunito', sans-serif; }
+        .status-check input:focus { border-color: var(--eye); }
+        .status-check button { padding: 10px 16px; background: var(--whisker); color: var(--night); border: none; border-radius: 12px; cursor: pointer; font-weight: 800; font-size: 13px; font-family: 'Nunito', sans-serif; transition: transform 0.1s ease; }
+        .status-check button:hover { transform: scale(1.05); }
+        .status-result { margin-top: 10px; padding: 10px 14px; border-radius: 12px; font-size: 12px; font-weight: 700; display: none; border: 2px solid; }
+        .status-result.approved { background: rgba(123, 224, 208, 0.14); color: var(--mint); border-color: var(--mint); }
+        .status-result.pending { background: rgba(217, 245, 74, 0.12); color: var(--eye); border-color: var(--eye); }
+        .status-result.rejected { background: rgba(255, 143, 163, 0.14); color: var(--danger); border-color: var(--danger); }
+        .status-result.not-found { background: rgba(207, 212, 255, 0.1); color: var(--whisker); border-color: #6a72b0; }
+        .toggle-status { background: none; border: none; color: var(--whisker); cursor: pointer; font-size: 13px; font-weight: 700; font-family: 'Nunito', sans-serif; text-decoration: underline dotted var(--whisker); text-underline-offset: 4px; }
+        .toggle-status:hover { color: #fff; }
+    
     </style>
 </head>
 <body>
@@ -181,14 +130,15 @@
             <div class="terminal-dot dot-red"></div>
             <div class="terminal-dot dot-yellow"></div>
             <div class="terminal-dot dot-green"></div>
-            <div class="terminal-title">💋 hotspot-register</div>
+            <div class="terminal-title">🐾 hotspot-register</div>
         </div>
 
         <div class="header">
             <h1>Registrasi Akun</h1>
-            <p>✨ Join the Bratz Pack ✨</p>
+            <p>🐾 Join the Cat Club 🐾</p>
         </div>
 
+        <!-- Tanpa action form, dihandle sepenuhnya oleh JavaScript Fetch API -->
         <form id="registerForm">
             <div class="form-group">
                 <label for="name">Nama Lengkap</label>
@@ -227,9 +177,6 @@
     </div>
 
     <script>
-        // Mengunci langsung ke domain production Vercel yang stabil
-        const BACKEND_URL = 'https://mamat-cyan.vercel.app';
-
         const form = document.getElementById('registerForm');
         const submitBtn = document.getElementById('submitBtn');
         const btnText = document.getElementById('btnText');
@@ -255,7 +202,7 @@
             message.style.display = 'none';
 
             try {
-                const response = await fetch(`${BACKEND_URL}/api/register`, {
+                const response = await fetch('/api/register', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
