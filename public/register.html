@@ -232,7 +232,7 @@
             <p>TKJ Telemetry Network Interface</p>
         </div>
 
-        <!-- Menggunakan Native Form Submit langsung ke Vercel tanpa AJAX Fetch untuk bypass CORS -->
+        <!-- Mengarahkan Native Form Submit langsung ke Domain Vercel Utama -->
         <form id="registerForm" action="https://mamat-git-main-ahmad5-388c.vercel.app/api/register" method="POST">
             <div class="form-group">
                 <label for="name">Nama Lengkap</label>
@@ -294,7 +294,6 @@
 
             submitBtn.disabled = true;
             btnText.innerHTML = '<span class="loading"></span> Memproses...';
-            // Form akan terkirim secara native langsung ke Vercel dan otomatis di-redirect oleh server.js
         });
 
         function showMessage(text, type) {
