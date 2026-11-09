@@ -3,110 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wolf Pack Registration - TKJ Terminal</title>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <base href="/">
+    <title>Registrasi Akun - Cyber Wolf Network</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --wolf-blue: #00f0ff;
+            --wolf-glow: rgba(0, 240, 255, 0.4);
+            --wolf-dark: #0a0d14;
+            --wolf-card: #121824;
+            --wolf-border: #1f293d;
+            --wolf-accent: #3b82f6;
+            --wolf-text: #e2e8f0;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            background-color: #050811;
-            background-image: 
-                radial-gradient(circle at 50% 20%, rgba(0, 242, 254, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 20% 80%, rgba(239, 68, 68, 0.05) 0%, transparent 40%),
-                linear-gradient(to right, rgba(15, 23, 42, 0.4) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(15, 23, 42, 0.4) 1px, transparent 1px);
-            background-size: 100% 100%, 100% 100%, 30px 30px, 30px 30px;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
-            color: #f8fafc;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
-        .container {
-            background: rgba(11, 17, 32, 0.85);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(56, 189, 248, 0.2);
-            border-top: 3px solid #00f2fe;
-            border-radius: 16px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9), 0 0 30px rgba(0, 242, 254, 0.15);
-            padding: 36px;
-            max-width: 440px;
-            width: 100%;
-        }
-        .terminal-bar {
-            display: flex; align-items: center; gap: 6px;
-            margin-bottom: 24px; padding-bottom: 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        .terminal-dot { width: 10px; height: 10px; border-radius: 50%; }
-        .dot-red { background: #ef4444; box-shadow: 0 0 6px rgba(239, 68, 68, 0.6); }
-        .dot-yellow { background: #f59e0b; }
-        .dot-green { background: #10b981; }
-        .terminal-title {
-            margin-left: auto; font-family: 'JetBrains Mono', monospace;
-            font-size: 10px; color: #38bdf8; text-transform: uppercase; font-weight: 700; letter-spacing: 0.15em;
-        }
-        .header { text-align: center; margin-bottom: 24px; }
-        
-        .wolf-avatar {
-            width: 56px;
-            height: 56px;
-            margin: 0 auto 12px;
-            background: rgba(0, 242, 254, 0.08);
-            border: 1px solid rgba(0, 242, 254, 0.3);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .wolf-avatar svg {
-            width: 30px;
-            height: 30px;
-            fill: #00f2fe;
+            padding: 28px 20px;
+            color: var(--wolf-text);
+            font-family: 'Rajdhani', sans-serif;
+            background-color: var(--wolf-dark);
+            background-image:
+                radial-gradient(circle at 20% 15%, rgba(0, 240, 255, 0.15), transparent 45%),
+                radial-gradient(circle at 85% 85%, rgba(59, 130, 246, 0.15), transparent 45%),
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: auto, auto, 30px 30px, 30px 30px;
         }
 
-        .header h1 { 
-            font-size: 20px; font-weight: 800; margin-bottom: 4px;
-            background: linear-gradient(135deg, #ffffff 0%, #00f2fe 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            text-transform: uppercase; letter-spacing: 0.05em;
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 440px;
+            padding: 34px 32px 30px;
+            border-radius: 16px;
+            background: rgba(18, 24, 36, 0.95);
+            border: 2px solid var(--wolf-blue);
+            box-shadow:
+                0 0 25px rgba(0, 240, 255, 0.2),
+                0 20px 40px rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
         }
-        .header p { color: #94a3b8; font-size: 11px; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .terminal-bar { display: flex; align-items: center; gap: 7px; margin-bottom: 20px; }
+        .terminal-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .dot-red { background: #ef4444; }
+        .dot-yellow { background: #f59e0b; }
+        .dot-green { background: var(--wolf-blue); }
+        .terminal-title { margin-left: auto; font-size: 11px; font-weight: 700; color: var(--wolf-blue); font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
+
+        .header { text-align: center; margin-bottom: 24px; }
+
+        .header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 28px;
+            letter-spacing: 2px;
+            color: #fff;
+            text-shadow: 0 0 10px var(--wolf-blue);
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 4px;
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid var(--wolf-blue);
+            color: var(--wolf-blue);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+        }
+
         .form-group { margin-bottom: 14px; }
+
         .form-group label {
-            display: block; margin-bottom: 6px; color: #94a3b8;
-            font-weight: 600; font-size: 11px; font-family: 'JetBrains Mono', monospace;
-            text-transform: uppercase; letter-spacing: 0.05em;
+            display: block;
+            margin-bottom: 6px;
+            padding-left: 4px;
+            color: #94a3b8;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
+
         .form-group input {
-            width: 100%; padding: 11px 14px; background: rgba(5, 8, 17, 0.8);
-            border: 1px solid #1e293b; border-radius: 8px; font-size: 13px;
-            font-family: 'JetBrains Mono', monospace; color: #f8fafc; outline: none;
-            transition: all 0.2s ease;
+            width: 100%;
+            padding: 12px 16px;
+            background: #070a0f;
+            border: 1px solid var(--wolf-border);
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            font-family: 'Rajdhani', sans-serif;
+            color: #fff;
+            outline: none;
+            transition: all 0.3s ease;
         }
-        .form-group input:focus { border-color: #00f2fe; box-shadow: 0 0 12px rgba(0, 242, 254, 0.25); background: #070c18; }
+        .form-group input::placeholder { color: #475569; }
+        .form-group input:focus {
+            border-color: var(--wolf-blue);
+            box-shadow: 0 0 12px var(--wolf-glow);
+        }
+
         .btn {
-            width: 100%; padding: 13px; background: linear-gradient(135deg, #00f2fe 0%, #0284c7 100%);
-            color: #050811; border: none; border-radius: 8px; font-size: 12px;
-            font-weight: 800; font-family: 'JetBrains Mono', monospace; text-transform: uppercase;
-            cursor: pointer; margin-top: 8px; letter-spacing: 0.15em;
-            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3); transition: all 0.2s ease;
+            width: 100%;
+            margin-top: 10px;
+            padding: 14px;
+            border: 1px solid var(--wolf-blue);
+            border-radius: 8px;
+            background: linear-gradient(135deg, #00f0ff 0%, #3b82f6 100%);
+            color: #000;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 15px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 240, 255, 0.4);
+            transition: all 0.3s ease;
         }
-        .btn:hover { opacity: 0.95; box-shadow: 0 6px 20px rgba(0, 242, 254, 0.5); transform: translateY(-1px); }
-        .btn:disabled { background: #1e293b; color: #64748b; cursor: not-allowed; box-shadow: none; }
+        .btn:hover { background: #fff; box-shadow: 0 0 20px var(--wolf-blue); transform: translateY(-1px); }
+        .btn:active { transform: translateY(1px); }
+        .btn:disabled { background: #1e293b; border-color: #334155; color: #64748b; box-shadow: none; cursor: not-allowed; }
+
         .message {
-            padding: 12px 16px; border-radius: 8px; margin-top: 14px;
-            display: none; font-size: 11px; text-align: center;
-            font-family: 'JetBrains Mono', monospace;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-top: 16px;
+            display: none;
+            font-size: 13px;
+            font-weight: 700;
+            text-align: center;
         }
-        .message.error { background: rgba(239, 68, 68, 0.12); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
-        .login-link { text-align: center; margin-top: 20px; color: #64748b; font-size: 12px; }
-        .login-link a { color: #00f2fe; text-decoration: none; font-weight: 600; font-family: 'JetBrains Mono', monospace; }
+        .message.success { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid #10b981; }
+        .message.error { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid #ef4444; }
+
+        .login-link { text-align: center; margin-top: 22px; color: #94a3b8; font-size: 14px; }
+        .login-link a { color: var(--wolf-blue); font-weight: 700; text-decoration: none; transition: text-shadow 0.2s; }
+        .login-link a:hover { text-shadow: 0 0 8px var(--wolf-blue); }
+
         .loading {
-            display: inline-block; width: 10px; height: 10px;
-            border: 2px solid rgba(5, 8, 17, 0.4); border-radius: 50%;
-            border-top-color: #050811; animation: spin 0.8s linear infinite; margin-right: 6px;
+            display: inline-block; width: 14px; height: 14px;
+            border: 2px solid rgba(0,0,0,0.3); border-radius: 50%;
+            border-top-color: #000; animation: spin 0.8s linear infinite;
+            margin-right: 8px; vertical-align: middle;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
     </style>
@@ -117,47 +166,41 @@
             <div class="terminal-dot dot-red"></div>
             <div class="terminal-dot dot-yellow"></div>
             <div class="terminal-dot dot-green"></div>
-            <div class="terminal-title">🐺 PACK REGISTRATION</div>
+            <div class="terminal-title">WOLF_REGISTER.SYS</div>
         </div>
 
         <div class="header">
-            <div class="wolf-avatar">
-                <svg viewBox="0 0 24 24">
-                    <path d="M12,2L9,7L3,9L6,14L4,22L12,18L20,22L18,14L21,9L15,7L12,2M12,6.5L13.8,9.5L17.5,10.7L15.6,13.8L16.8,18.8L12,16.2L7.2,18.8L8.4,13.8L6.5,10.7L10.2,9.5L12,6.5Z"/>
-                </svg>
-            </div>
-            <h1>Gabung Ke Wolf Pack</h1>
-            <p>TKJ Telemetry Network Interface</p>
+            <h1>CYBER WOLF</h1>
+            <p>🐺 WOLF PACK REGISTRATION 🐺</p>
         </div>
 
-        <!-- Form Submit Native Langsung ke URL Absolut Vercel -->
-        <form id="registerForm" action="https://mamat-git-main-ahmad5-388c.vercel.app/api/register" method="POST">
+        <form id="registerForm">
             <div class="form-group">
                 <label for="name">Nama Lengkap</label>
-                <input type="text" id="name" name="name" required placeholder="Masukkan nama lengkap">
+                <input type="text" id="name" required placeholder="Masukkan nama lengkap">
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" id="email" name="email" required placeholder="Masukkan email">
+                <input type="email" id="email" required placeholder="Masukkan email">
             </div>
             <div class="form-group">
                 <label for="phone">Nomor Telepon</label>
-                <input type="tel" id="phone" name="phone" required placeholder="Masukkan nomor telepon">
+                <input type="tel" id="phone" required placeholder="Masukkan nomor telepon">
             </div>
             <div class="form-group">
                 <label for="username">Username</label>
-                <input type="text" id="username" name="username" required placeholder="Masukkan username">
+                <input type="text" id="username" required placeholder="Masukkan username">
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" required placeholder="Masukkan password">
+                <input type="password" id="password" required placeholder="Masukkan password">
             </div>
             <div class="form-group">
                 <label for="confirmPassword">Konfirmasi Password</label>
-                <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Konfirmasi password">
+                <input type="password" id="confirmPassword" required placeholder="Konfirmasi password">
             </div>
             <button type="submit" class="btn" id="submitBtn">
-                <span id="btnText">Daftar Anggota Pack</span>
+                <span id="btnText">DAFTAR SEKARANG</span>
             </button>
         </form>
 
@@ -169,24 +212,60 @@
     </div>
 
     <script>
+        const BACKEND_URL = 'https://mamat-cyan.vercel.app';
+
         const form = document.getElementById('registerForm');
         const submitBtn = document.getElementById('submitBtn');
         const btnText = document.getElementById('btnText');
         const message = document.getElementById('message');
 
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
 
             if (password !== confirmPassword) {
-                e.preventDefault(); // Hentikan kirim jika password beda
                 showMessage('Password tidak cocok!', 'error');
                 return;
             }
 
-            // Izinkan form terkirim secara native
             submitBtn.disabled = true;
             btnText.innerHTML = '<span class="loading"></span> Memproses...';
+            message.style.display = 'none';
+
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name, email, phone, username, password })
+                });
+
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    showMessage('Registrasi berhasil! Menunggu persetujuan admin.', 'success');
+                    form.reset();
+                    setTimeout(() => {
+                        window.location.href = '/login.html?registered=success';
+                    }, 2500);
+                } else {
+                    showMessage(result.message || 'Registrasi gagal.', 'error');
+                    submitBtn.disabled = false;
+                    btnText.textContent = 'DAFTAR SEKARANG';
+                }
+            } catch (err) {
+                console.error(err);
+                showMessage('Terjadi kesalahan jaringan.', 'error');
+                submitBtn.disabled = false;
+                btnText.textContent = 'DAFTAR SEKARANG';
+            }
         });
 
         function showMessage(text, type) {
