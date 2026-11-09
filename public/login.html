@@ -3,251 +3,234 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wolf Gateway - Hotspot Login</title>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Hotspot Login - Cyber Wolf Network</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
-        * { 
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box; 
+        :root {
+            --wolf-blue: #00f0ff;
+            --wolf-glow: rgba(0, 240, 255, 0.4);
+            --wolf-dark: #0a0d14;
+            --wolf-card: #121824;
+            --wolf-border: #1f293d;
+            --wolf-accent: #3b82f6;
+            --wolf-text: #e2e8f0;
         }
-        
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            background-color: #050811;
-            background-image: 
-                radial-gradient(circle at 50% 20%, rgba(0, 242, 254, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(239, 68, 68, 0.05) 0%, transparent 40%),
-                linear-gradient(to right, rgba(15, 23, 42, 0.4) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(15, 23, 42, 0.4) 1px, transparent 1px);
-            background-size: 100% 100%, 100% 100%, 30px 30px, 30px 30px;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
-            color: #f8fafc;
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: var(--wolf-text);
+            font-family: 'Rajdhani', sans-serif;
+            background-color: var(--wolf-dark);
+            background-image:
+                radial-gradient(circle at 20% 15%, rgba(0, 240, 255, 0.15), transparent 45%),
+                radial-gradient(circle at 85% 85%, rgba(59, 130, 246, 0.15), transparent 45%),
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: auto, auto, 30px 30px, 30px 30px;
         }
 
         .container {
-            background: rgba(11, 17, 32, 0.85);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(56, 189, 248, 0.2);
-            border-top: 3px solid #00f2fe;
-            border-radius: 16px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9), 0 0 30px rgba(0, 242, 254, 0.15);
-            padding: 36px;
-            max-width: 420px;
-            width: 100%;
             position: relative;
-            overflow: hidden;
+            width: 100%;
+            max-width: 420px;
+            padding: 34px 32px 30px;
+            border-radius: 16px;
+            background: rgba(18, 24, 36, 0.95);
+            border: 2px solid var(--wolf-blue);
+            box-shadow:
+                0 0 25px rgba(0, 240, 255, 0.2),
+                0 20px 40px rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
         }
 
-        .container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100px;
-            height: 100px;
-            background: radial-gradient(circle, rgba(0, 242, 254, 0.1) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        /* Wolf Terminal Bar */
         .terminal-bar {
             display: flex;
             align-items: center;
-            gap: 6px;
-            margin-bottom: 24px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            gap: 7px;
+            margin-bottom: 20px;
         }
-
-        .terminal-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-        }
-        .dot-red { background: #ef4444; box-shadow: 0 0 6px rgba(239, 68, 68, 0.6); }
+        .terminal-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .dot-red { background: #ef4444; }
         .dot-yellow { background: #f59e0b; }
-        .dot-green { background: #10b981; }
-
+        .dot-green { background: var(--wolf-blue); }
         .terminal-title {
             margin-left: auto;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            color: #38bdf8;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            font-weight: 700;
-        }
-
-        .header { 
-            text-align: center; 
-            margin-bottom: 28px; 
-        }
-        
-        .header h1 { 
-            color: #f8fafc; 
-            font-size: 22px; 
-            font-weight: 800; 
-            margin-bottom: 4px; 
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            background: linear-gradient(135deg, #ffffff 0%, #00f2fe 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .header p { 
-            color: #94a3b8; 
-            font-size: 11px; 
-            font-weight: 600;
-            font-family: 'JetBrains Mono', monospace;
-            text-transform: uppercase; 
-            letter-spacing: 0.15em; 
-        }
-        
-        /* Wolf Cyber Badge & Icon */
-        .wolf-icon-wrapper {
-            width: 72px; 
-            height: 72px; 
-            margin: 0 auto 16px;
-            background: rgba(0, 242, 254, 0.05);
-            border: 1px solid rgba(0, 242, 254, 0.3);
-            border-radius: 50%; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
-            position: relative;
-        }
-
-        .wolf-icon-wrapper svg {
-            width: 40px;
-            height: 40px;
-            fill: #00f2fe;
-            filter: drop-shadow(0 0 6px rgba(0, 242, 254, 0.8));
-        }
-
-        .form-group { 
-            margin-bottom: 18px; 
-        }
-        
-        .form-group label { 
-            display: block; 
-            margin-bottom: 6px; 
-            color: #94a3b8; 
-            font-weight: 600; 
             font-size: 11px;
-            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            color: var(--wolf-blue);
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        .header { text-align: center; margin-bottom: 26px; }
+
+        .wolf-icon {
+            width: 64px; height: 64px;
+            margin: 0 auto 12px;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 28px;
+            border-radius: 50%;
+            background: rgba(0, 240, 255, 0.1);
+            border: 2px solid var(--wolf-blue);
+            box-shadow: 0 0 15px var(--wolf-glow);
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 32px;
+            letter-spacing: 2px;
+            color: #fff;
+            text-shadow: 0 0 10px var(--wolf-blue);
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 4px;
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid var(--wolf-blue);
+            color: var(--wolf-blue);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            font-family: 'Orbitron', sans-serif;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
         }
-        
+
+        .form-group { margin-bottom: 16px; }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            padding-left: 4px;
+            color: #94a3b8;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
         .form-group input {
-            width: 100%; 
-            padding: 12px 16px; 
-            background: rgba(5, 8, 17, 0.8); 
-            border: 1px solid #1e293b;
-            border-radius: 8px; 
-            font-size: 13px; 
-            font-family: 'JetBrains Mono', monospace;
-            color: #f8fafc; 
-            outline: none; 
-            transition: all 0.25 ease;
+            width: 100%;
+            padding: 13px 16px;
+            background: #070a0f;
+            border: 1px solid var(--wolf-border);
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            font-family: 'Rajdhani', sans-serif;
+            color: #fff;
+            outline: none;
+            transition: all 0.3s ease;
         }
-        
-        .form-group input:focus { 
-            border-color: #00f2fe; 
-            box-shadow: 0 0 12px rgba(0, 242, 254, 0.25); 
-            background: #070c18;
+        .form-group input::placeholder { color: #475569; }
+        .form-group input:focus {
+            border-color: var(--wolf-blue);
+            box-shadow: 0 0 12px var(--wolf-glow);
         }
 
         .btn {
-            width: 100%; 
-            padding: 13px; 
-            background: linear-gradient(135deg, #00f2fe 0%, #0284c7 100%);
-            color: #050811; 
-            border: none; 
-            border-radius: 8px; 
-            font-size: 12px; 
-            font-weight: 800;
-            font-family: 'JetBrains Mono', monospace;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            cursor: pointer;
-            transition: all 0.2s ease;
+            width: 100%;
             margin-top: 6px;
-            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
+            padding: 14px;
+            border: 1px solid var(--wolf-blue);
+            border-radius: 8px;
+            background: linear-gradient(135deg, #00f0ff 0%, #3b82f6 100%);
+            color: #000;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 16px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 240, 255, 0.4);
+            transition: all 0.3s ease;
         }
-        
-        .btn:hover { 
-            opacity: 0.95;
-            box-shadow: 0 6px 20px rgba(0, 242, 254, 0.5);
-            transform: translateY(-1px);
+        .btn:hover { background: #fff; box-shadow: 0 0 20px var(--wolf-blue); transform: translateY(-1px); }
+        .btn:active { transform: translateY(1px); }
+        .btn:disabled { background: #1e293b; border-color: #334155; color: #64748b; box-shadow: none; cursor: not-allowed; }
+
+        .message {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-top: 16px;
+            display: none;
+            font-size: 13px;
+            font-weight: 700;
+            text-align: center;
         }
-        .btn:active { transform: translateY(0); }
-        .btn:disabled { background: #1e293b; color: #64748b; cursor: not-allowed; box-shadow: none; }
-        
-        .message { 
-            padding: 12px 16px; 
-            border-radius: 8px; 
-            margin-top: 16px; 
-            display: none; 
-            font-size: 11px; 
-            font-weight: 500;
-            font-family: 'JetBrains Mono', monospace;
-        }
-        .message.success { background: rgba(16, 185, 129, 0.12); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
-        .message.error { background: rgba(239, 68, 68, 0.12); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
-        .message.info { background: rgba(59, 130, 246, 0.12); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
-        
-        .register-link { text-align: center; margin-top: 20px; color: #64748b; font-size: 12px; }
-        .register-link a { color: #00f2fe; text-decoration: none; font-weight: 600; font-family: 'JetBrains Mono', monospace; }
-        .register-link a:hover { text-decoration: underline; }
-        
+        .message.success { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid #10b981; }
+        .message.error { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid #ef4444; }
+        .message.info { background: rgba(0, 240, 255, 0.15); color: var(--wolf-blue); border: 1px solid var(--wolf-blue); }
+
+        .register-link { text-align: center; margin-top: 22px; color: #94a3b8; font-size: 14px; }
+        .register-link a { color: var(--wolf-blue); font-weight: 700; text-decoration: none; transition: text-shadow 0.2s; }
+        .register-link a:hover { text-shadow: 0 0 8px var(--wolf-blue); }
+
         .loading {
-            display: inline-block; width: 10px; height: 10px;
-            border: 2px solid rgba(5, 8, 17, 0.4); border-radius: 50%; border-top-color: #050811;
-            animation: spin 0.8s linear infinite; margin-right: 6px; vertical-align: middle;
+            display: inline-block; width: 14px; height: 14px;
+            border: 2px solid rgba(0,0,0,0.3); border-radius: 50%; border-top-color: #000;
+            animation: spin 0.8s linear infinite; margin-right: 8px; vertical-align: middle;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
-        
-        .status-check { margin-top: 16px; padding: 16px; background: #050811; border: 1px solid #1e293b; border-radius: 8px; display: none; }
+
+        .status-check {
+            margin-top: 16px; padding: 16px;
+            background: rgba(10, 13, 20, 0.6);
+            border: 1px dashed var(--wolf-border);
+            border-radius: 8px;
+            display: none;
+        }
         .status-check.show { display: block; }
-        .status-check input { width: calc(100% - 60px); padding: 10px 12px; background: #0d1322; border: 1px solid #1e293b; border-radius: 6px; color: #f8fafc; margin-right: 6px; outline: none; font-size: 11px; font-family: 'JetBrains Mono', monospace; }
-        .status-check input:focus { border-color: #00f2fe; }
-        .status-check button { padding: 10px 14px; background: #1e293b; color: #f8fafc; border: 1px solid #334155; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 11px; font-family: 'JetBrains Mono', monospace; transition: background 0.2s; }
-        .status-check button:hover { background: #334155; }
-        
-        .status-result { margin-top: 10px; padding: 10px; border-radius: 6px; font-size: 10px; font-family: 'JetBrains Mono', monospace; font-weight: 500; display: none; }
-        .status-result.approved { background: rgba(16, 185, 129, 0.1); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
-        .status-result.pending { background: rgba(245, 158, 11, 0.1); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
-        .status-result.rejected { background: rgba(239, 68, 68, 0.1); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
-        .status-result.not-found { background: rgba(100, 116, 139, 0.1); color: #94a3b8; border: 1px solid rgba(100, 116, 139, 0.3); }
+        .status-check input {
+            width: calc(100% - 64px); padding: 10px 14px;
+            background: #070a0f; border: 1px solid var(--wolf-border); border-radius: 6px;
+            color: #fff; margin-right: 6px; outline: none;
+            font-size: 13px; font-weight: 600; font-family: 'Rajdhani', sans-serif;
+        }
+        .status-check input:focus { border-color: var(--wolf-blue); }
+        .status-check button {
+            padding: 10px 14px; background: var(--wolf-blue); color: #000;
+            border: none; border-radius: 6px; cursor: pointer;
+            font-weight: 900; font-size: 13px; font-family: 'Orbitron', sans-serif;
+            transition: all 0.2s;
+        }
+        .status-check button:hover { background: #fff; box-shadow: 0 0 10px var(--wolf-blue); }
+
+        .status-result { margin-top: 10px; padding: 10px 14px; border-radius: 6px; font-size: 12px; font-weight: 700; display: none; }
+        .status-result.approved { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid #10b981; }
+        .status-result.pending { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid #f59e0b; }
+        .status-result.rejected { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid #ef4444; }
+        .status-result.not-found { background: rgba(100, 116, 139, 0.15); color: #94a3b8; border: 1px solid #475569; }
+
+        .toggle-status {
+            background: none; border: none; color: #94a3b8; cursor: pointer;
+            font-size: 13px; font-weight: 700; font-family: 'Rajdhani', sans-serif;
+            text-decoration: underline; letter-spacing: 1px;
+        }
+        .toggle-status:hover { color: var(--wolf-blue); }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Terminal Bar Header -->
         <div class="terminal-bar">
             <div class="terminal-dot dot-red"></div>
             <div class="terminal-dot dot-yellow"></div>
             <div class="terminal-dot dot-green"></div>
-            <div class="terminal-title">🐺 FENRIR-CORE / AUTH</div>
+            <div class="terminal-title">WOLF_GATEWAY.SYS</div>
         </div>
 
         <div class="header">
-            <div class="wolf-icon-wrapper">
-                <!-- Cyber Wolf Head SVG -->
-                <svg viewBox="0 0 24 24">
-                    <path d="M12,2L9,7L3,9L6,14L4,22L12,18L20,22L18,14L21,9L15,7L12,2M12,6.5L13.8,9.5L17.5,10.7L15.6,13.8L16.8,18.8L12,16.2L7.2,18.8L8.4,13.8L6.5,10.7L10.2,9.5L12,6.5M10.5,11.5A1,1 0 0,0 9.5,12.5A1,1 0 0,0 10.5,13.5A1,1 0 0,0 11.5,12.5A1,1 0 0,0 10.5,11.5M13.5,11.5A1,1 0 0,0 12.5,12.5A1,1 0 0,0 13.5,13.5A1,1 0 0,0 14.5,12.5A1,1 0 0,0 13.5,11.5Z"/>
-                </svg>
-            </div>
-            <h1>ALPHA HOTSPOT</h1>
-            <p>PACK PROTOCOL GATEWAY</p>
+            <div class="wolf-icon">🐺</div>
+            <h1>CYBER WOLF</h1>
+            <p>⚡ SECURE HOTSPOT ⚡</p>
         </div>
 
         <!-- FORM LOGIN MIKROTIK NATIVE ACTION -->
@@ -256,8 +239,8 @@
             <input type="hidden" name="popup" value="true">
 
             <div class="form-group">
-                <label for="username">Username Driver / Pack ID</label>
-                <input type="text" id="username" name="username" value="" required placeholder="Masukkan username driver">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" value="" required placeholder="Masukkan username">
             </div>
 
             <div class="form-group">
@@ -266,34 +249,33 @@
             </div>
 
             <button type="submit" class="btn" id="submitBtn">
-                <span id="btnText">HUBUNGKAN AKUN</span>
+                <span id="btnText">MASUK</span>
             </button>
         </form>
 
         <div class="message" id="message"></div>
 
         <div class="status-check" id="statusCheck">
-            <p style="margin-bottom: 8px; color: #94a3b8; font-size: 10px; font-weight: 700; font-family: 'JetBrains Mono', monospace; text-transform: uppercase;">Cek Telemetri Registrasi:</p>
+            <p style="margin-bottom: 8px; color: #94a3b8; font-size: 12px; font-weight: 700; letter-spacing: 1px;">CEK STATUS REGISTRASI:</p>
             <div style="display: flex;">
-                <input type="text" id="checkUsername" placeholder="Username Driver">
+                <input type="text" id="checkUsername" placeholder="Username">
                 <button type="button" onclick="checkStatus()">Cek</button>
             </div>
             <div class="status-result" id="statusResult"></div>
         </div>
 
         <div class="register-link">
-            Belum punya akun? <a href="register.html">Registrasi Pack Baru</a>
+            Belum punya akun? <a href="register.html">Registrasi</a>
         </div>
 
         <div style="text-align: center; margin-top: 16px;">
-            <button type="button" onclick="toggleStatusCheck()" style="background: none; border: none; color: #00f2fe; cursor: pointer; font-size: 11px; font-family: 'JetBrains Mono', monospace; font-weight: 600; text-decoration: underline;">
-                Cek status registrasi 
+            <button type="button" class="toggle-status" onclick="toggleStatusCheck()">
+                Cek status registrasi akun
             </button>
         </div>
     </div>
 
     <script>
-        // Menggunakan domain Vercel aktif yang terhubung ke database Upstash
         const BACKEND_URL = 'https://mamat-git-main-ahmad5-388c.vercel.app';
 
         const form = document.getElementById('loginForm');
@@ -314,7 +296,7 @@
             };
 
             submitBtn.disabled = true;
-            btnText.innerHTML = '<span class="loading"></span> Connecting Telemetry...';
+            btnText.innerHTML = '<span class="loading"></span> Connecting...';
 
             try {
                 const response = await fetch(`${BACKEND_URL}/api/login`, {
@@ -328,22 +310,22 @@
                 const data = await response.json();
 
                 if (data.success) {
-                    showMessage(`System initialized, Driver ${data.user.name}! Login berhasil.`, 'success');
-                    
+                    showMessage(`Access Granted, ${data.user.name}! Login berhasil.`, 'success');
+
                     setTimeout(() => {
-                        showMessage('Masuk ke jalur utama...', 'info');
+                        showMessage('Mengalihkan ke jaringan...', 'info');
                         HTMLFormElement.prototype.submit.call(form);
                     }, 1500);
                 } else {
                     showMessage(data.message, 'error');
                     submitBtn.disabled = false;
-                    btnText.textContent = 'HUBUNGKAN AKUN';
+                    btnText.textContent = 'MASUK';
                 }
             } catch (error) {
                 console.error(error);
                 showMessage('Terjadi kesalahan koneksi ke server backend.', 'error');
                 submitBtn.disabled = false;
-                btnText.textContent = 'HUBUNGKAN AKUN';
+                btnText.textContent = 'MASUK';
             }
         });
 
@@ -356,7 +338,7 @@
             const statusResult = document.getElementById('statusResult');
 
             if (!username) {
-                statusResult.textContent = 'Masukkan username driver terlebih dahulu';
+                statusResult.textContent = 'Masukkan username terlebih dahulu';
                 statusResult.className = 'status-result not-found';
                 statusResult.style.display = 'block';
                 return;
@@ -372,9 +354,9 @@
                     statusResult.style.display = 'block';
 
                     if (data.status === 'pending') {
-                        statusResult.textContent += ' - Menunggu akses dari System (Admin)';
+                        statusResult.textContent += ' - Menunggu persetujuan Admin';
                     } else if (data.status === 'approved') {
-                        statusResult.textContent += ' - Siap terhubung ke jaringan';
+                        statusResult.textContent += ' - Akun aktif siap digunakan';
                     } else if (data.status === 'rejected') {
                         statusResult.textContent += ' - Akses ditolak';
                     }
@@ -384,7 +366,7 @@
                     statusResult.style.display = 'block';
                 }
             } catch (error) {
-                statusResult.textContent = 'Gagal mengecek status (Server backend tidak aktif)';
+                statusResult.textContent = 'Gagal mengecek status (Server offline)';
                 statusResult.className = 'status-result not-found';
                 statusResult.style.display = 'block';
             }
