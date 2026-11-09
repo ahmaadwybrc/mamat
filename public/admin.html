@@ -3,41 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <title>Pit Wall - TKJ Hotspot Gateway Admin</title>
+    <title>Wolf Gateway - Alpha Command Center</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Teko, Barlow & Barlow Semi Condensed -->
+    <!-- Google Fonts: Inter & JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@500;600;700&family=Barlow:wght@400;500;600;700&family=Barlow+Semi+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <script>
-        // ====== TEMA MOTOR BALAP: merah racing MotoGP ======
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
                         dark: {
-                            base: '#0b0b0d',
-                            card: '#151518',
-                            panel: '#1c1c21',
-                            border: '#2c2c34',
-                            borderLight: '#40404c'
+                            base: '#050811',
+                            card: '#0b1120',
+                            panel: '#0e172a',
+                            border: '#1e293b',
+                            borderLight: '#334155'
                         },
                         cyber: {
-                            cyan: '#e10600',
-                            blue: '#ffc400',
-                            green: '#8de03c',
-                            amber: '#ffc400',
-                            red: '#ff4d4d',
+                            cyan: '#00f2fe',
+                            blue: '#3b82f6',
+                            green: '#10b981',
+                            amber: '#f59e0b',
+                            red: '#ef4444',
                         }
                     },
                     fontFamily: {
-                        sans: ['Barlow', 'sans-serif'],
-                        mono: ['Barlow Semi Condensed', 'sans-serif'],
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
                     }
                 }
             }
@@ -45,103 +41,115 @@
     </script>
 
     <style>
-        /* Latar aspal gelap + cahaya merah racing + speed streak */
+        /* Custom Wolf Cyber Background */
         body {
-            background-color: #0e0e10;
-            background-image:
-                radial-gradient(circle at 50% 0%, rgba(225, 6, 0, 0.16), transparent 55%),
-                repeating-linear-gradient(100deg, transparent 0 38px, rgba(255,255,255,0.02) 38px 39px, transparent 39px 76px),
-                linear-gradient(135deg, rgba(255, 255, 255, 0.03) 25%, transparent 25%),
-                linear-gradient(225deg, rgba(255, 255, 255, 0.03) 25%, transparent 25%),
-                linear-gradient(45deg, rgba(255, 255, 255, 0.03) 25%, transparent 25%),
-                linear-gradient(315deg, rgba(255, 255, 255, 0.03) 25%, #0e0e10 25%);
-            background-position: 0 0, 0 0, 6px 0, 6px 0, 0 0, 0 0;
-            background-size: 100% 100%, 100% 100%, 12px 12px, 12px 12px, 12px 12px, 12px 12px;
-            background-attachment: fixed;
-            color: #e4e6ea;
+            background-color: #050811;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(0, 242, 254, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 90% 90%, rgba(239, 68, 68, 0.05) 0%, transparent 40%),
+                linear-gradient(to right, rgba(30, 41, 59, 0.3) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(30, 41, 59, 0.3) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+            color: #e2e8f0;
         }
 
-        /* Lampu indikator */
-        .led-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
-        .led-green { background-color: #8de03c; box-shadow: 0 0 8px #8de03c, 0 0 12px #8de03c; animation: pulseGlow 1.8s infinite ease-in-out; }
-        .led-cyan { background-color: #e10600; box-shadow: 0 0 8px #e10600; animation: pulseGlow 2.2s infinite ease-in-out; }
-        .led-red { background-color: #ff4d4d; box-shadow: 0 0 8px #ff4d4d; }
+        /* Glowing LEDs Animation */
+        .led-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .led-green {
+            background-color: #10b981;
+            box-shadow: 0 0 8px #10b981, 0 0 12px #10b981;
+            animation: pulseGlow 1.8s infinite ease-in-out;
+        }
+        .led-cyan {
+            background-color: #00f2fe;
+            box-shadow: 0 0 8px #00f2fe;
+            animation: pulseGlow 2.2s infinite ease-in-out;
+        }
+        .led-red {
+            background-color: #ef4444;
+            box-shadow: 0 0 8px #ef4444;
+        }
+
         @keyframes pulseGlow {
             0%, 100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.4; transform: scale(0.85); }
         }
 
-        /* Scrollbar */
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: #0b0b0d; }
-        ::-webkit-scrollbar-thumb { background: #2c2c34; border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: #e10600; }
-
-        /* Strip bendera balap di atas panel */
-        .checker-top { position: relative; overflow: hidden; }
-        .checker-top::before {
-            content: ""; position: absolute; top: 0; left: 0; right: 0; height: 8px; z-index: 10; pointer-events: none;
-            background: repeating-conic-gradient(#f4f4f6 0 25%, #0b0b0d 0 50%) 0 0 / 16px 16px;
+        /* Terminal Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
         }
-        header.checker-top, main.checker-top { padding-top: 1.7rem !important; }
-
-        /* Sudut lebih tegas */
-        .rounded-xl { border-radius: 6px !important; }
-        .rounded-lg { border-radius: 4px !important; }
-        .rounded { border-radius: 3px !important; }
-
-        /* Judul gaya balap */
-        h1, h2 { font-family: 'Teko', sans-serif !important; font-style: italic; font-weight: 600 !important; letter-spacing: 0.05em; }
-        h1 { font-size: 1.75rem !important; line-height: 1 !important; }
-        h2 { font-size: 1.45rem !important; line-height: 1.1 !important; }
-        #statTotal, #statPending, #statApproved, #statRejected {
-            font-family: 'Teko', sans-serif !important; font-size: 2.6rem !important; line-height: 1 !important; font-weight: 600 !important;
+        ::-webkit-scrollbar-track {
+            background: #050811;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00f2fe;
         }
 
-        /* Garis aksen di kartu statistik */
-        section > div { border-left-width: 4px !important; }
-        section > div:nth-child(1) { border-left-color: #f4f4f6 !important; }
-        section > div:nth-child(2) { border-left-color: #ffc400 !important; }
-        section > div:nth-child(3) { border-left-color: #8de03c !important; }
-        section > div:nth-child(4) { border-left-color: #ff4d4d !important; }
-
-        button:focus-visible { outline: 2px solid #ffc400; outline-offset: 2px; }
+        /* Scanline Overlay for CLI Vibe */
+        .scanlines {
+            position: relative;
+            overflow: hidden;
+        }
+        .scanlines::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+            background-size: 100% 4px;
+            z-index: 10;
+            pointer-events: none;
+            opacity: 0.3;
+        }
     </style>
 </head>
 <body class="font-sans antialiased min-h-screen flex flex-col justify-between">
 
     <!-- LOGIN MODAL (GATEWAY AUTHENTICATION) -->
-    <div id="loginModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4">
-        <div class="w-full max-w-md bg-dark-card border border-dark-borderLight rounded-xl p-6 pt-8 shadow-2xl shadow-red-950/40 relative overflow-hidden checker-top">
+    <div id="loginModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-4">
+        <div class="w-full max-w-md bg-dark-card border border-dark-borderLight rounded-xl p-6 shadow-2xl shadow-cyan-950/40 relative overflow-hidden scanlines">
             <!-- Terminal Header -->
             <div class="flex items-center justify-between border-b border-dark-border pb-4 mb-5">
                 <div class="flex items-center space-x-2">
                     <span class="led-dot led-cyan"></span>
-                    <span class="font-mono text-xs text-cyber-cyan font-bold tracking-wider uppercase">RouterOS v7.12 - CLI Auth</span>
+                    <span class="font-mono text-xs text-cyber-cyan font-bold tracking-wider uppercase">Alpha Wolf CLI Auth</span>
                 </div>
-                <span class="font-mono text-xs text-gray-500">GATEWAY #01</span>
+                <span class="font-mono text-xs text-gray-500">PACK NODE #01</span>
             </div>
 
             <div class="text-center mb-6">
-                <div class="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-cyber-cyan/10 border border-cyber-cyan/30 mb-3 text-cyber-cyan">
-                    <span style="font-size:22px;line-height:1">🏍️</span>
+                <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-cyber-cyan/10 border border-cyber-cyan/30 mb-3 text-cyber-cyan">
+                    <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                        <path d="M12,2L9,7L3,9L6,14L4,22L12,18L20,22L18,14L21,9L15,7L12,2M12,6.5L13.8,9.5L17.5,10.7L15.6,13.8L16.8,18.8L12,16.2L7.2,18.8L8.4,13.8L6.5,10.7L10.2,9.5L12,6.5Z"/>
+                    </svg>
                 </div>
-                <h2 class="text-lg font-bold text-white tracking-wide">TKJ HOTSPOT GATEWAY</h2>
-                <p class="text-xs text-gray-400 mt-1 font-mono">Authentication Required for Admin Node</p>
+                <h2 class="text-lg font-bold text-white tracking-wide uppercase">WOLF COMMAND CENTER</h2>
+                <p class="text-xs text-gray-400 mt-1 font-mono">Authentication Required for Alpha Admin</p>
             </div>
 
             <form id="loginForm" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-mono text-gray-400 mb-1">USER IDENTIFIER</label>
+                    <label class="block text-xs font-mono text-gray-400 mb-1">ALPHA IDENTIFIER</label>
                     <input type="text" value="Sasuke (Admin)" readonly class="w-full bg-dark-base border border-dark-border rounded-lg px-3 py-2 text-sm font-mono text-cyber-cyan focus:outline-none cursor-not-allowed">
                 </div>
                 <div>
-                    <label class="block text-xs font-mono text-gray-400 mb-1">GATEWAY PASSWORD</label>
+                    <label class="block text-xs font-mono text-gray-400 mb-1">PACK SECURITY KEY</label>
                     <input type="password" id="adminPassword" placeholder="••••••••" required class="w-full bg-dark-base border border-dark-border rounded-lg px-3 py-2 text-sm font-mono text-white focus:border-cyber-cyan focus:ring-1 focus:ring-cyber-cyan focus:outline-none transition-all">
                 </div>
                 
                 <button type="submit" class="w-full py-2.5 bg-cyber-cyan/10 hover:bg-cyber-cyan/20 border border-cyber-cyan/50 text-cyber-cyan hover:text-white font-mono font-semibold text-xs tracking-wider uppercase rounded-lg transition-all duration-200 flex items-center justify-center space-x-2">
-                    <span>CONNECT TO ROUTER</span>
+                    <span>CONNECT TO PACK ROUTER</span>
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                 </button>
             </form>
@@ -156,16 +164,18 @@
     <div id="dashboardApp" class="hidden flex-1 flex flex-col max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-6">
         
         <!-- HEADER / ROUTER NAVBAR -->
-        <header class="checker-top bg-dark-card border border-dark-border rounded-xl p-4 sm:px-6 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-lg">
+        <header class="bg-dark-card border border-dark-border rounded-xl p-4 sm:px-6 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-lg">
             <!-- Left Brand -->
             <div class="flex items-center space-x-4">
-                <div class="w-10 h-10 rounded-lg bg-cyber-cyan/10 border border-cyber-cyan/30 flex items-center justify-center text-cyber-cyan">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                <div class="w-10 h-10 rounded-full bg-cyber-cyan/10 border border-cyber-cyan/30 flex items-center justify-center text-cyber-cyan">
+                    <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                        <path d="M12,2L9,7L3,9L6,14L4,22L12,18L20,22L18,14L21,9L15,7L12,2M12,6.5L13.8,9.5L17.5,10.7L15.6,13.8L16.8,18.8L12,16.2L7.2,18.8L8.4,13.8L6.5,10.7L10.2,9.5L12,6.5Z"/>
+                    </svg>
                 </div>
                 <div>
                     <div class="flex items-center space-x-2">
-                        <h1 class="text-base font-bold text-white tracking-wide">GATEKEEPER-CORE</h1>
-                        <span class="px-2 py-0.5 text-[10px] font-mono font-semibold bg-cyber-cyan/10 text-cyber-cyan border border-cyber-cyan/30 rounded">TKJ-NET-01</span>
+                        <h1 class="text-base font-bold text-white tracking-wide uppercase">ALPHA-WOLF-CORE</h1>
+                        <span class="px-2 py-0.5 text-[10px] font-mono font-semibold bg-cyber-cyan/10 text-cyber-cyan border border-cyber-cyan/30 rounded">PACK-NET-01</span>
                     </div>
                     <p class="text-xs font-mono text-gray-400">RouterOS v7.12 • Interface: <span class="text-cyber-cyan">wlan1-hotspot</span></p>
                 </div>
@@ -182,7 +192,7 @@
 
                 <!-- Admin Badge -->
                 <div class="bg-dark-base border border-dark-border px-3 py-1.5 rounded-lg flex items-center space-x-2 text-xs font-mono">
-                    <span class="text-gray-400">ADMIN:</span>
+                    <span class="text-gray-400">ALPHA:</span>
                     <span class="text-white font-bold">Sasuke</span>
                 </div>
 
@@ -198,7 +208,7 @@
             <!-- Total Leases -->
             <div class="bg-dark-card border border-dark-border rounded-xl p-4 hover:border-dark-borderLight transition-all">
                 <div class="flex items-center justify-between text-xs font-mono text-gray-400 mb-2">
-                    <span>TOTAL REGISTRATIONS</span>
+                    <span>PACK MEMBERS</span>
                     <span class="led-dot led-cyan"></span>
                 </div>
                 <div class="flex items-baseline justify-between">
@@ -234,7 +244,7 @@
             <!-- Blocked / Rejected -->
             <div class="bg-dark-card border border-dark-border rounded-xl p-4 hover:border-dark-borderLight transition-all">
                 <div class="flex items-center justify-between text-xs font-mono text-red-400 mb-2">
-                    <span>BLOCKED / REJECTED</span>
+                    <span>BLOCKED / BANISHED</span>
                     <span class="led-dot led-red"></span>
                 </div>
                 <div class="flex items-baseline justify-between">
@@ -245,7 +255,7 @@
         </section>
 
         <!-- MAIN NETWORK USER CONTROL PANEL -->
-        <main class="checker-top bg-dark-card border border-dark-border rounded-xl p-5 shadow-xl flex flex-col flex-1">
+        <main class="bg-dark-card border border-dark-border rounded-xl p-5 shadow-xl flex flex-col flex-1">
             <!-- Table Header Bar -->
             <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-5">
                 <div>
@@ -315,7 +325,7 @@
                 <span id="sysLogText" class="text-cyber-cyan truncate max-w-xl">Interface wlan1-hotspot ready. RADIUS server online (127.0.0.1:1812).</span>
             </div>
             <div class="text-[11px] text-gray-500">
-                TKJ Network Suite © 2026 • RouterOS Gateway
+                Alpha Wolf Network Suite © 2026 • RouterOS Gateway
             </div>
         </footer>
     </div>
